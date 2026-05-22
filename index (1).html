@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Instaauris</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        principal: '#991B1E', // Vermelho avermelhado profissional
+                        escuro: '#1A1A1A',
+                        fundo: '#F8F5F5',
+                        claro: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        assinatura: ['"Brush Script MT"', 'cursive', 'sans-serif'],
+                        principal: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .conteudo-escondido { display: none !important; }
+            .sombra-leve { box-shadow: 0 2px 15px rgba(153, 27, 30, 0.1); }
+            .animar { animation: entrada 0.4s ease-out; }
+            @keyframes entrada {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .texto-logo {
+                font-family: 'Brush Script MT', cursive;
+                font-size: 3rem;
+                font-weight: bold;
+                background: linear-gradient(45deg, #991B1E, #C22E33);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                letter-spacing: 1px;
+            }
+            .texto-logo-pequeno {
+                font-family: 'Brush Script MT', cursive;
+                font-size: 1.8rem;
+                font-weight: bold;
+                background: linear-gradient(45deg, #991B1E, #C22E33);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .borda-perfil {
+                border: 2px solid transparent;
+                background: linear-gradient(white, white) padding-box, 
+                            linear-gradient(45deg, #991B1E, #C22E33) border-box;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-fundo font-principal text-escuro antialiased">
+
+    <!-- TELA DE ENTRADA: LOGIN OU CADASTRO -->
+    <section id="telaInicial" class="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-principal/5 to-fundo">
+        <div class="mb-12 text-center">
+            <h1 class="texto-logo mb-3">Instaauris</h1>
+            <p class="text-gray-600 text-lg">Perceba o que te conecta</p>
+        </div>
+
+        <div class="bg-claro w-full max-w-sm rounded-2xl p-6 sombra-leve animar">
+            
+            <!-- FORMULÁRIO DE LOGIN -->
+            <div id="formLogin">
+                <h2 class="text-xl font-bold mb-6 text-center">Acessar Conta</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1 text-gray-700">E-mail</label>
+                    <input type="email" id="emailLogin" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-principal/30 focus:border-principal outline-none transition" placeholder="seuemail@exemplo.com">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Senha</label>
+                    <input type="password" id="senhaLogin" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-principal/30 focus:border-principal outline-none transition" placeholder="Digite sua senha">
+                </div>
+
+                <button onclick="fazerLogin()" class="w-full bg-principal text-white font-semibold py-3 rounded-lg hover:bg-principal/90 transition">
+                    Entrar
+                </button>
+
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-600 mb-2">Ainda não tem uma conta?</p>
+                    <button onclick="mostrarCadastro()" class="w-full border-2 border-principal text-principal font-semibold py-2.5 rounded-lg hover:bg-principal/5 transition">
+                        Cadastre-se Grátis
+                    </button>
+                </div>
+            </div>
+
+            <!-- FORMULÁRIO DE CADASTRO (LIBERADO PARA TODOS) -->
+            <div id="formCadastro" class="conteudo-escondido">
+                <h2 class="text-xl font-bold mb-6 text-center">Criar Nova Conta</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Nome Completo</label>
+                    <input type="text" id="nomeCad" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-principal/30 focus:border-principal outline-none transition" placeholder="Seu nome e sobrenome">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1 text-gray-700">E-mail</label>
+                    <input type="email" id="emailCad" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-principal/30 focus:border-principal outline-none transition" placeholder="seuemail@exemplo.com">
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Senha</label>
+                    <input type="password" id="senhaCad" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-principal/30 focus:border-principal outline-none transition" placeholder="Crie uma senha segura">
+                </div>
+
+                <button onclick="fazerCadastro()" class="w-full bg-principal text-white font-semibold py-3 rounded-lg hover:bg-principal/90 transition">
+                    Concluir Cadastro
+                </button>
+
+                <p class="text-center mt-5 text-sm text-gray-600">
+                    Já tem conta? 
+                    <span onclick="mostrarLogin()" class="text-principal font-medium cursor-pointer">Fazer Login</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTRUTURA PRINCIPAL DO APP (SÓ APARECE DEPOIS DE LOGAR) -->
+    <div id="appPrincipal" class="conteudo-escondido">
+        
+        <!-- Cabeçalho Fixo -->
+        <header class="bg-claro fixed top-0 w-full z-50 sombra-leve px-4 py-3 flex justify-between items-center">
+            <h1 class="texto-logo-pequeno">Instaauris</h1>
+            <div class="flex gap-4 items-center">
+                <button onclick="abrirTransmissao()" class="text-xl text-gray-700 hover:text-principal transition"><i class="fa fa-video-camera"></i></button>
+                <button onclick="abrirPostagem()" class="text-xl text-gray-700 hover:text-principal transition"><i class="fa fa-plus-circle"></i></button>
+                <button onclick="irParaPerfil()" class="w-8 h-8 rounded-full borda-perfil flex items-center justify-center text-sm font-bold text-principal" id="btnPerfil">I</button>
+            </div>
+        </header>
+
+        <!-- Conteúdo -->
+        <main class="pt-14 pb-16 max-w-lg mx-auto">
+
+            <!-- Área de Status (24h) -->
+            <section class="bg-claro mt-3 mx-3 p-3 rounded-xl sombra-leve overflow-x-auto flex gap-4 scrollbar-hide">
+                <div class="text-center min-w-[70px]">
+                    <div class="w-16 h-16 rounded-full border-2 border-dashed border-principal/40 flex items-center justify-center text-principal mx-auto">
+                        <i class="fa fa-plus text-lg"></i>
+                    </div>
+                    <span class="text-xs mt-1 block">Seu Status</span>
+                </div>
+
+                <!-- Exemplos de Status -->
+                <div class="text-center min-w-[70px]" onclick="verStatus('Mariana')">
+                    <div class="w-16 h-16 rounded-full borda-perfil overflow-hidden mx-auto">
+                        <img src="https://picsum.photos/id/64/100/100" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs mt-1 block">Mariana</span>
+                </div>
+                <div class="text-center min-w-[70px]" onclick="verStatus('Lucas')">
+                    <div class="w-16 h-16 rounded-full borda-perfil overflow-hidden mx-auto">
+                        <img src="https://picsum.photos/id/91/100/100" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs mt-1 block">Lucas</span>
+                </div>
+                <div class="text-center min-w-[70px]" onclick="verStatus('Carla')">
+                    <div class="w-16 h-16 rounded-full borda-perfil overflow-hidden mx-auto">
+                        <img src="https://picsum.photos/id/177/100/100" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs mt-1 block">Carla</span>
+                </div>
+            </section>
+
+            <!-- Feed de Publicações -->
+            <section class="mt-3 px-3" id="feed">
+                
+                <!-- Postagem Foto -->
+                <div class="bg-claro rounded-xl mb-4 overflow-hidden sombra-leve animar">
+                    <div class="p-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <img src="https://picsum.photos/id/64/100/100" class="w-9 h-9 rounded-full borda-perfil object-cover">
+                            <div>
+                                <h4 class="font-semibold text-sm">Mariana Silva</h4>
+                                <p class="text-xs text-gray-500">25 min atrás</p>
+                            </div>
+                        </div>
+                        <button><i class="fa fa-ellipsis-h text-gray-500"></i></button>
+                    </div>
+
+                    <div class="px-3 pb-2">
+                        <p class="text-sm mb-2">Dia lindo para explorar novos lugares ✨ #Instaauris</p>
+                    </div>
+
+                    <img src="https://picsum.photos/id/1039/600/400" class="w-full max-h-[450px] object-cover">
+
+                    <div class="p-3 flex justify-between items-center">
+                        <div class="flex gap-5">
+                            <button class="flex items-center gap-1 hover:text-principal transition"><i class="fa fa-heart-o text-lg"></i> <span class="text-sm">142</span></button>
+                            <button class="flex items-center gap-1 hover:text-principal transition"><i class="fa fa-comment-o text-lg"></i> <span class="text-sm">28</span></button>
+                            <button class="flex items-center gap-1 hover:text-principal transition"><i class="fa fa-share-alt text-lg"></i></button>
+                        </div>
+                        <button><i class="fa fa-bookmark-o text-gray-500"></i></button>
+                    </div>
+                </div>
+
+                <!-- Postagem Vídeo -->
+                <div class="bg-claro rounded-xl mb-4 overflow-hidden sombra-leve animar">
+                    <div class="p-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <img src="https://picsum.photos/id/91/100/100" class="w-9 h-9 rounded-full borda-perfil object-cover">
+                            <div>
+                                <h4 class="font-semibold text-sm">Lucas Mendes</h4>
+                                <p class="text-xs text-gray-500">1 hora atrás</p>
+                            </div>
+                        </div>
+                        <button><i class="fa fa-ellipsis-h text-gray-500"></i></button>
+                    </div>
+
+                    <div class="px-3 pb-2">
+                        <p class="text-sm mb-2">Momento especial gravado 🎥 Aproveitem!</p>
+                    </div>
+
+                    <div class="bg-black flex justify-center">
+                        <video controls class="w-full max-h-[450px]">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="p-3 flex justify-between items-center">
+                        <div class="flex gap-5">
+                            <button class="flex items-center gap-1 hover:text-principal transition"><i class="fa fa-heart-o text-lg"></i> <span class="text-sm">317</span></button>
+                            <button class="flex items-center gap-1 hover:text-principal transition"><i class="fa fa-comment-o text-lg"></i> <span class="text-sm">54</span></button>
+                            <button class="flex items-center gap-1 hover:text-principal transition"><i class="fa fa-share-alt text-lg"></i></button>
+                        </div>
+                        <button><i class="fa fa-bookmark-o text-gray-500"></i></button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- Menu Inferior -->
+        <nav class="bg-claro fixed bottom-0 w-full max-w-lg left-1/2 -translate-x-1/2 border-t border-gray-100 z-50">
+            <div class="flex justify-around py-3">
+                <button class="text-principal text-xl"><i class="fa fa-home"></i></button>
+                <button class="text-gray-500 text-xl hover:text-principal transition"><i class="fa fa-search"></i></button>
+                <button class="text-gray-500 text-xl hover:text-principal transition"><i class="fa fa-bell"></i></button>
+                <button class="text-gray-500 text-xl hover:text-principal transition" onclick="irParaPerfil()"><i class="fa fa-user"></i></button>
+            </div>
+        </nav>
+
+        <!-- Tela de Perfil -->
+        <section id="telaPerfil" class="conteudo-escondido pt-14 pb-16 max-w-lg mx-auto bg-fundo min-h-screen">
+            <div class="p-4">
+                <button onclick="voltarParaInicio()" class="mb-4 text-principal"><i class="fa fa-arrow-left mr-1"></i> Voltar</button>
+
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-24 h-24 rounded-full borda-perfil bg-claro flex items-center justify-center text-4xl font-bold text-principal" id="fotoPerfil">I</div>
+                    <div>
+                        <h2 class="text-2xl font-bold" id="nomePerfil">Usuário</h2>
+                        <p class="text-gray-600 text-sm" id="emailPerfil">usuario@email.com</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-around text-center mb-6 bg-claro p-3 rounded-xl sombra-leve">
+                    <div>
+                        <p class="font-bold text-xl text-principal">87</p>
+                        <p class="text-gray-600 text-sm">Publicações</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-xl text-principal">1.452</p>
+                        <p class="text-gray-600 text-sm">Seguidores</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-xl text-principal">368</p>
+                        <p class="text-gray-600 text-sm">Seguindo</p>
+                    </div>
+                </div>
+
+                <button class="w-full bg-principal text-white font-semibold py-2 rounded-lg mb-6 hover:bg-principal/90 transition">Editar Perfil</button>
+
+                <div class="grid grid-cols-3 gap-1">
+                    <img src="https://picsum.photos/id/1001/200/200" class="w-full h-28 object-cover">
+                    <img src="https://picsum.photos/id/1002/200/200" class="w-full h-28 object-cover">
+                    <img src="https://picsum.photos/id/1003/200/200" class="w-full h-28 object-cover">
+                    <img src="https://picsum.photos/id/1004/200/200" class="w-full h-28 object-cover">
+                    <img src="https://picsum.photos/id/1005/200/200" class="w-full h-28 object-cover">
+                    <img src="https://picsum.photos/id/1006/200/200" class="w-full h-28 object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL - Nova Postagem -->
+        <div id="modalPostagem" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center conteudo-escondido p-4">
+            <div class="bg-claro w-full max-w-md rounded-xl p-5 animar">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-principal">Nova Publicação</h3>
+                    <button onclick="fecharModal()" class="text-gray-500 text-xl"><i class="fa fa-times"></i></button>
+                </div>
+                
+                <textarea placeholder="O que você quer compartilhar hoje?" class="w-full p-3 border border-gray-200 rounded-lg h-32 resize-none mb-3"></textarea>
+                
+                <div class="flex gap-2 mb-4">
+                    <button class="flex-1 bg-fundo py-2 rounded-lg hover:bg-principal/10 text-principal"><i class="fa fa-image mr-1"></i> Foto</button>
+                    <button class="flex-1 bg-fundo py-2 rounded-lg hover:bg-principal/10 text-principal"><i class="fa fa-video-camera mr-1"></i> Vídeo</button>
+                    <button class="flex-1 bg-fundo py-2 rounded-lg hover:bg-principal/10 text-principal"><i class="fa fa-camera mr-1"></i> Status</button>
+                </div>
+
+                <button onclick="publicar()" class="w-full bg-principal text-white font-bold py-2 rounded-lg hover:bg-principal/90">Publicar</button>
+            </div>
+        </div>
+
+        <!-- MODAL - Transmissão Ao Vivo -->
+        <div id="modalLive" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center conteudo-escondido p-4">
+            <div class="bg-claro w-full max-w-md rounded-xl p-5 animar text-center">
+                <button onclick="fecharModal()" class="absolute top-4 right-4 text-white text-xl"><i class="fa fa-times"></i></button>
+                
+                <i class="fa fa-video-camera text-5xl text-principal mb-3"></i>
+                <h3 class="text-2xl font-bold mb-2">Transmissão Ao Vivo</h3>
+                <p class="text-gray-600 mb-5">Conecte-se com seus seguidores em tempo real.</p>
+
+                <input type="text" placeholder="Título da live..." class="w-full p-3 border border-gray-200 rounded-lg mb-4">
+                
+                <button onclick="iniciarLive()" class="w-full bg-principal text-white font-bold py-3 rounded-lg hover:bg-principal/90">
+                    📡 INICIAR AGORA
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        // Dados do usuário logado
+        let usuarioLogado = null;
+
+        // Alternar telas de Login/Cadastro
+        function mostrarCadastro() {
+            document.getElementById('formLogin').classList.add('conteudo-escondido');
+            document.getElementById('formCadastro').classList.remove('conteudo-escondido');
+        }
+        function mostrarLogin() {
+            document.getElementById('formCadastro').classList.add('conteudo-escondido');
+            document.getElementById('formLogin').classList.remove('conteudo-escondido');
+        }
+
+        // Função de Cadastro (LIBERADO PARA TODOS)
+        function fazerCadastro() {
+            const nome = document.getElementById('nomeCad').value.trim();
+            const email = document.getElementById('emailCad').value.trim();
+ 
